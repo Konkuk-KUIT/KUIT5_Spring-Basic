@@ -1,12 +1,10 @@
 package kuit.springbasic.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import kuit.springbasic.db.UserRepository;
 import kuit.springbasic.domain.User;
 import kuit.springbasic.util.UserSessionUtils;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
