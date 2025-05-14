@@ -51,7 +51,7 @@ public class HomeController {
                 .addObject("questions", questions);
     }
 
-    @RequestMapping("/homeV3")
+    @RequestMapping("/")
     public String showHomeV3(Model model) {
         Collection<Question> questions = questionRepository.findAll();
         model.addAttribute("questions", questions);
