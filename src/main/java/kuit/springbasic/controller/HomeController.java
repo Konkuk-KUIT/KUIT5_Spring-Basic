@@ -1,12 +1,67 @@
 package kuit.springbasic.controller;
 
-public class HomeController {
 
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import kuit.springbasic.db.MemoryQuestionRepository;
+import kuit.springbasic.db.MemoryUserRepository;
+import kuit.springbasic.db.QuestionRepository;
+import kuit.springbasic.db.UserRepository;
+import kuit.springbasic.domain.Question;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import java.util.Collection;
+import java.util.List;
+
+@Controller
+public class HomeController {
+    // 너무 능동적임 주입 받기로함 private final QuestionRepository questionRepository = new MemoryQuestionRepository();
+    private final QuestionRepository questionRepository;
+
+    @Autowired // 생성자가 한개면 없어도 된다
+    public HomeController(QuestionRepository questionRepository) {
+        this.questionRepository = questionRepository;
+    }
     /**
      * TODO: showHome
      * showHomeV1 : parameter - HttpServletRequest, HttpServletResponse / return - ModelAndView
      * showHomeV2 : parameter - none / return - ModelAndView
      * showHomeV3 : parameter - Model / return - String
      */
+
+    @RequestMapping("/")
+    public ModelAndView showHomeV1(HttpServletRequest request, HttpServletResponse response) {
+        Collection<Question> questions = questionRepository.findAll();
+        return new ModelAndView("home")
+                .addObject("questions",questions);
+    }
+
+    @RequestMapping("/homeV2")
+    public ModelAndView showHomeV2() {   // request , response 없어도 잘돌아가넹
+        Collection<Question> questions = questionRepository.findAll();
+        return new ModelAndView("home")
+                .addObject("questions",questions);
+    }
+
+    @RequestMapping("/homeV3")
+    public String showHomeV3(Model model) {
+        Collection<Question> questions = questionRepository.findAll();
+        model.addAttribute("questions",questions);
+        return "home";
+    }
+
+    @RequestMapping("/homeV4")
+    public ModelAndView showHomeV4(Model model) {
+        Collection<Question> questions = questionRepository.findAll();
+        model.addAttribute("questions",questions);
+        return new ModelAndView("home");
+    }
+
 
 }

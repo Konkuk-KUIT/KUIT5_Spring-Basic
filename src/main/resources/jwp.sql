@@ -9,7 +9,7 @@ CREATE TABLE USERS (
                        PRIMARY KEY               (userId)
 );
 
-INSERT INTO USERS VALUES('kuit', 'kuit', 'kuit', 'kuit@kuit.kr');
+INSERT INTO USERS VALUES('1', '1', 'kuit', 'kuit@kuit.kr');
 
 DROP TABLE IF EXISTS QUESTIONS;
 
