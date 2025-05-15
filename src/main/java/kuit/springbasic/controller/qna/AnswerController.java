@@ -35,6 +35,7 @@ public class AnswerController {
      * addAnswerV2 : @RequestParam, @ResponseBody
      * addAnswerV3 : @ModelAttribute, @ResponseBody
      */
+    // HttpServletResponse를 직접 조작해 JSON을 추가하는 방식
     //@PostMapping("/api/qna/addAnswer")
     public void addAnswerV0(@RequestParam("questionId") int questionId,
                               @RequestParam("writer") String writer,
@@ -79,6 +80,7 @@ public class AnswerController {
         response.getWriter().write(sb.toString());
     }
 
+    // WebConfig에 ViewResolver 등록해놓고, Model에 Map 형태로 데이터를 담아 jsonView라는 View 이름 반환
     //@PostMapping("/api/qna/addAnswer")
     public String addAnswerV1(@RequestParam("questionId") int questionId,
                               @RequestParam("writer") String writer,
@@ -107,6 +109,7 @@ public class AnswerController {
         return "jsonView"; // WebConfig에서 등록한 View 이름
     }
 
+    // @ResponseBody를 사용해서 반환하는 Map이 자동으로 JSON 변환되도록 처리
     //@PostMapping("/api/qna/addAnswer")
     @ResponseBody
     public Map<String, Object> addAnswerV2(@RequestParam("questionId") int questionId,
@@ -132,6 +135,7 @@ public class AnswerController {
         );
     }
 
+    // @ModelAttribute를 사용한 버젼
     @PostMapping("/api/qna/addAnswer")
     @ResponseBody
     public Map<String, Object> addAnswerV3(@ModelAttribute Answer answer) {
