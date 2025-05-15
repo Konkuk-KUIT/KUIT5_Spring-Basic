@@ -30,7 +30,7 @@ public class Question {
         this.writer = writer;
         this.title = title;
         this.contents = contents;
-        this.createdDate = Date.valueOf(LocalDate.now());
+        this.createdDate = new Date(System.currentTimeMillis());
         this.countOfAnswer = countOfAnswer;
     }
 

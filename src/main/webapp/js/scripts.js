@@ -2,11 +2,12 @@ $(".answerWrite input[type=submit]").click(addAnswer);
 
 function addAnswer(e) {
     e.preventDefault();
+    // 서버에 전송할 데이터
     var queryString = $(".submit-write").serialize();
 
     $.ajax({
         type : 'post',
-        url : '/api/qna/addAnswer',
+        url : '/api/qna/addAnswerV1',
         data : queryString,
         dataType : 'json',
         error: onError,

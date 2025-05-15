@@ -40,7 +40,7 @@ public class MemoryAnswerRepository implements AnswerRepository {
 
     public Answer insert(Answer answer) {
         answer.setAnswerId(getPK());
-        answer.setCreatedDate(Date.valueOf(LocalDate.now()));
+//        answer.setCreatedDate(new Date(System.currentTimeMillis()));
         answers.put(Integer.toString(answer.getAnswerId()), answer);
         return answer;
     }

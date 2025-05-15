@@ -6,6 +6,8 @@ import kuit.springbasic.db.UserRepository;
 import kuit.springbasic.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -22,7 +24,7 @@ public class LoginController {
     /**
      * TODO: showLoginForm
      */
-    @RequestMapping("/user/loginForm")
+    @GetMapping("/user/login")
     public String showLoginForm() {
         return "user/login";
     }
@@ -30,7 +32,7 @@ public class LoginController {
     /**
      * TODO: showLoginFailed
      */
-    @RequestMapping("/user/loginFailed")
+    @GetMapping("/user/loginFailed")
     public String showLoginFailed() {
         return "user/loginFailed";
     }
@@ -42,7 +44,7 @@ public class LoginController {
      * loginV3 : @RequestParam 생략(비추천)
      * loginV4 : @ModelAttribute
      */
-    @RequestMapping("/user/login")
+    @PostMapping("/user/login")
     public String login(@RequestParam("userId") String userId,
                         @RequestParam("password") String password,
                         HttpServletRequest request) {
@@ -52,7 +54,7 @@ public class LoginController {
 
         if (byUserId != null && loginUser.isSameUser(byUserId)) {
             HttpSession session = request.getSession();
-            session.setAttribute("user", loginUser);
+            session.setAttribute("user", byUserId);
             return "redirect:/";
         }
         return "redirect:/user/loginFailed";
@@ -61,5 +63,12 @@ public class LoginController {
     /**
      * TODO: logout
      */
+    @GetMapping("/user/logout")
+    public String logout(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        session.removeAttribute("user");
+        return "redirect:/";
+    }
+
 
 }
