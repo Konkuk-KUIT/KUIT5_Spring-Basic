@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!doctype html>
 <html lang="ko">
@@ -19,8 +20,9 @@
                 </div>
                 <div class="article-header-text">
                     <span class="article-author-name">${question.writer}</span>
-                    <span class="article-header-time">${question.createdDate}</span>
-                    <fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${question.createdDate}"/>
+                    <span class="article-header-time">
+                        <fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${question.createdDate}" />
+                    </span>
                     <i class="icon-link"></i>
                 </div>
             </div>
@@ -34,7 +36,7 @@
                         <c:if test="${sessionScope.user.name == question.writer}">
                             <li>
                                 <a class="link-modify-article"
-                                   href="/qna/form?questionId=${question.questionId}">수정</a>
+                                   href="/qna/updateV2?questionId=${question.questionId}">수정</a>
                             </li>
                             <li>
                                 <a class="link-modify-article"

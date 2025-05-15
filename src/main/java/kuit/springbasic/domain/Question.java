@@ -1,7 +1,7 @@
 package kuit.springbasic.domain;
 
 
-import java.sql.Date;
+import java.util.Date;
 import java.time.LocalDate;
 
 public class Question {
@@ -30,7 +30,7 @@ public class Question {
         this.writer = writer;
         this.title = title;
         this.contents = contents;
-        this.createdDate = Date.valueOf(LocalDate.now());
+        this.createdDate = new Date();
         this.countOfAnswer = countOfAnswer;
     }
 

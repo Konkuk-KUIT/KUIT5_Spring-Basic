@@ -10,7 +10,7 @@
 <div class="container" id="main">
 
     <main class="form-signin">
-        <form name="update" method="post" action="/user/update">
+        <form name="update" method="post" action="/user/updateV1">
             <div class="form-floating">
                 <input type="text" class="form-control" value="${user.userId}" id="userId" name="userId"
                        placeholder="Id" readonly>

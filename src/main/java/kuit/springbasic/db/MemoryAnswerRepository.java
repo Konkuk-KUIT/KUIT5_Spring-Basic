@@ -4,7 +4,7 @@ package kuit.springbasic.db;
 import kuit.springbasic.domain.Answer;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Date;
+import java.util.Date;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -40,8 +40,10 @@ public class MemoryAnswerRepository implements AnswerRepository {
 
     public Answer insert(Answer answer) {
         answer.setAnswerId(getPK());
-        answer.setCreatedDate(Date.valueOf(LocalDate.now()));
+        answer.setCreatedDate(new Date());
         answers.put(Integer.toString(answer.getAnswerId()), answer);
+
+        System.out.println("삽입된 Answer = " + answer);
         return answer;
     }
 }

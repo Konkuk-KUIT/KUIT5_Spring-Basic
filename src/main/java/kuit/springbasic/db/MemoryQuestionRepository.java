@@ -41,6 +41,10 @@ public class MemoryQuestionRepository implements QuestionRepository{
         repoQuestion.updateCountofAnswer(question);
     }
 
+    public void deleteById(int questionId) {
+        questions.remove(Integer.toString(questionId));
+    }
+
     public List<Question> findAll() {
         return questions.values().stream().toList();
     }

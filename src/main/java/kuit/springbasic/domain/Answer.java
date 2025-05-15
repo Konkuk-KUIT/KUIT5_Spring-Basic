@@ -1,14 +1,16 @@
 package kuit.springbasic.domain;
 
 
-import java.sql.Date;
-import java.time.LocalDate;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.util.Date;
 
 public class Answer {
     private int answerId;
     private int questionId;
     private String writer;
     private String contents;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createdDate;
 
     public Answer() {
@@ -27,7 +29,7 @@ public class Answer {
         this.questionId = questionId;
         this.writer = writer;
         this.contents = contents;
-        this.createdDate = Date.valueOf(LocalDate.now());
+//        this.createdDate = new Date(System.currentTimeMillis());
     }
 
     public int getAnswerId() {
