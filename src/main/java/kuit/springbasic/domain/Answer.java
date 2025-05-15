@@ -3,7 +3,7 @@ package kuit.springbasic.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class Answer {
     private int answerId;
@@ -29,7 +29,7 @@ public class Answer {
         this.questionId = questionId;
         this.writer = writer;
         this.contents = contents;
-        this.createdDate = new Date(System.currentTimeMillis());
+//        this.createdDate = new Date(System.currentTimeMillis());
     }
 
     public int getAnswerId() {

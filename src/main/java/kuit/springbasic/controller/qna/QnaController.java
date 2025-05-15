@@ -28,6 +28,10 @@ public class QnaController {
         Question question = questionRepository.findByQuestionId(questionId);
         Collection<Answer> answerByQuestionId = answerRepository.findAllByQuestionId(questionId);
 
+        for (Answer a : answerByQuestionId) {
+            System.out.println("답변 확인: " + a);
+        }
+
         model.addAttribute("question", question);
         model.addAttribute("answers", answerByQuestionId);
         return "qna/show";

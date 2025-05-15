@@ -1,6 +1,7 @@
 package kuit.springbasic.controller.qna;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.ui.Model;
 import jakarta.servlet.http.HttpServletResponse;
 import kuit.springbasic.db.AnswerRepository;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -39,30 +41,29 @@ public class AnswerController {
                             HttpServletResponse response) throws IOException {
         Answer answer = new Answer(questionId, writer, contents);
         Answer savedAnswer = answerRepository.insert(answer);
+
         Question question = questionRepository.findByQuestionId(questionId);
         question.increaseCountOfAnswer();
         questionRepository.updateCountOfAnswer(question);
 
         /**
-         * {
-         *   "answer": {
-         *     "questionId": 1,
-         *     "writer": "nayoun",
-         *     "contents": "answer"
-         *   },
-         *   "status": "ok"
-         * }
+         * {answerId: 4, questionId: 2, writer: "쿠잇", contents: "1", createdDate: "2025-05-15 02:39:27"}
          */
+
+        Map<String, Object> responseBody = new HashMap<>();
+        responseBody.put("answer", savedAnswer);
+
         //json 응답 하기
         ObjectMapper mapper = new ObjectMapper();
         response.setContentType("application/json;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        out.print(mapper.writeValueAsString(answer));
+        out.print(mapper.writeValueAsString(responseBody));
     }
 
     // 모르겠음...
+    @ResponseBody
     @PostMapping("/api/qna/addAnswerV2")
-    public Map<String, Object> addAnswerV1(@RequestParam("questionId") int questionId,
+    public Map<String, Object> addAnswerV2(@RequestParam("questionId") int questionId,
                                            @RequestParam("writer") String writer,
                                            @RequestParam("contents") String contents) {
         Answer answer = new Answer(questionId, writer, contents);
@@ -93,12 +94,14 @@ public class AnswerController {
 
     @ResponseBody
     @PostMapping("/api/qna/addAnswerV4")
-    public Answer addAnswerV3(@ModelAttribute("answer") Answer answer) {
+    public Map<String, Object> addAnswerV3(@ModelAttribute("answer") Answer answer) {
         Answer savedAnswer = answerRepository.insert(answer);
         Question question = questionRepository.findByQuestionId(answer.getQuestionId());
         question.increaseCountOfAnswer();
         questionRepository.updateCountOfAnswer(question);
 
-        return savedAnswer;
+        Map<String, Object> result = new HashMap<>();
+        result.put("answer", savedAnswer);
+        return result;
     }
 }
