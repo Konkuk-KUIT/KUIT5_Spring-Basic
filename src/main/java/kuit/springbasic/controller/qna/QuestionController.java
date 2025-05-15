@@ -24,7 +24,7 @@ public class QuestionController {
     /**
      * TODO: showQuestionForm
      */
-    @RequestMapping("/qna/form")
+    @GetMapping("/qna/form")
     public String showQuestionForm(HttpServletRequest request) {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
@@ -42,7 +42,7 @@ public class QuestionController {
      * createQuestionV1 : @RequestParam
      * createQuestionV2 : @ModelAttribute
      */
-    @RequestMapping("/qna/create")
+    @PostMapping("/qna/create")
     public String createQuestionV1(@RequestParam("writer") String writer,
                                    @RequestParam("title") String title,
                                    @RequestParam("contents") String contents) {
@@ -53,7 +53,7 @@ public class QuestionController {
         return "redirect:/";
     }
 
-    //@RequestMapping("/qna/create")
+    //@PostMapping("/qna/create")
     public String createQuestionV2(@ModelAttribute Question newQuestion) {
         questionRepository.insert(new Question(
                 newQuestion.getWriter(),

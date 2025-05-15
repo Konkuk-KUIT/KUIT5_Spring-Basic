@@ -7,6 +7,7 @@ import kuit.springbasic.domain.Question;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -31,7 +32,7 @@ public class HomeController {
      */
 
     // HttpServletRequest, HttpServletResponse -> 쿠키, 세션 정보 접근 등 필요한 경우에만 명시적으로 사용
-    @RequestMapping("/homeV1")
+    @GetMapping("/homeV1")
     public ModelAndView showHomeV1(HttpServletRequest request, HttpServletResponse response) {
         Collection<Question> questions = questionRepository.findAll();
 
@@ -41,7 +42,7 @@ public class HomeController {
                 .addObject("questions", questions);
     }
 
-    @RequestMapping("/homeV2")
+    @GetMapping("/homeV2")
     public ModelAndView showHomeV2() { // HandlerMethodArgumentResolver가 메서드를 실행할 때 요청을 분석하여 적절하게  파라미터를 주입
         Collection<Question> questions = questionRepository.findAll();
 
@@ -51,7 +52,7 @@ public class HomeController {
                 .addObject("questions", questions);
     }
 
-    @RequestMapping("/home")
+    @GetMapping("/home")
     public String showHomeV3(Model model) {
         Collection<Question> questions = questionRepository.findAll();
         model.addAttribute("questions", questions);
@@ -60,7 +61,7 @@ public class HomeController {
         return "home";
     }
 
-    @RequestMapping("/homeV4")
+    @GetMapping("/homeV4")
     public ModelAndView showHomeV4(Model model) {
         Collection<Question> questions = questionRepository.findAll();
         model.addAttribute("questions", questions);

@@ -5,6 +5,7 @@ import kuit.springbasic.domain.Question;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -20,7 +21,7 @@ public class QnaController {
     /**
      * TODO: showQnA
      */
-    @RequestMapping("/qna/show")
+    @GetMapping("/qna/show")
     public String showQuestionForm(@RequestParam("questionId") int questionId, Model model) {
         Question question = questionRepository.findByQuestionId(questionId);
         model.addAttribute("question", question);

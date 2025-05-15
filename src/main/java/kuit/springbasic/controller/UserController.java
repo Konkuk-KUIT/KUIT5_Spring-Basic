@@ -7,10 +7,7 @@ import kuit.springbasic.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
@@ -27,7 +24,7 @@ public class UserController {
      * TODO: showUserForm
      */
     // 회원 가입 폼
-    @RequestMapping("/user/form")
+    @GetMapping("/user/form")
     public String showUserForm() {
         return "user/form";
     }
@@ -37,7 +34,7 @@ public class UserController {
      * createUserV1 : @RequestParam
      * createUserV2 : @ModelAttribute
      */
-    // @RequestMapping("/user/signup")
+    // @PostMapping("/user/signup")
     public String createUserV1(@RequestParam("userId") String userId,
                                @RequestParam("password") String password,
                                @RequestParam("name") String name,
@@ -47,7 +44,7 @@ public class UserController {
         return "redirect:/";
     }
 
-    @RequestMapping("/user/signup")
+    @PostMapping("/user/signup")
     public String createUserV2(@ModelAttribute User newUser) {
         userRepository.insert(new User(
                 newUser.getUserId(),
@@ -63,7 +60,7 @@ public class UserController {
     /**
      * TODO: showUserList
      */
-    @RequestMapping("/user/list")
+    @GetMapping("/user/list")
     public String showUserList(HttpServletRequest request, Model model) {
         // 세션에서 로그인 유저 정보 가져오기
         HttpSession session = request.getSession();
@@ -84,7 +81,7 @@ public class UserController {
     /**
      * TODO: showUserUpdateForm
      */
-    @RequestMapping("/user/updateForm")
+    @GetMapping("/user/updateForm")
     public String showUserUpdateForm(@RequestParam("userId") String userId, Model model) {
         User user = userRepository.findByUserId(userId);
         model.addAttribute("user", user);
@@ -97,7 +94,7 @@ public class UserController {
      * updateUserV1 : @RequestParam
      * updateUserV2 : @ModelAttribute
      */
-    // @RequestMapping("/user/update")
+    // @PostMapping("/user/update")
     public String updateUserV1(@RequestParam("userId") String userId,
                              @RequestParam("password") String password,
                              @RequestParam("name") String name,
@@ -111,7 +108,7 @@ public class UserController {
         return "redirect:/user/list";
     }
 
-    @RequestMapping("/user/update")
+    @PostMapping("/user/update")
     public String updateUserV2(@ModelAttribute User updateUser) {
         userRepository.update(updateUser);
 
