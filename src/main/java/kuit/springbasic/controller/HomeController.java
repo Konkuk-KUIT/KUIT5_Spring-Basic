@@ -8,6 +8,7 @@ import kuit.springbasic.db.QuestionRepository;
 import kuit.springbasic.db.UserRepository;
 import kuit.springbasic.domain.Question;
 import kuit.springbasic.domain.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -16,7 +17,13 @@ import java.util.Collection;
 
 @Controller
 public class HomeController {
-    private QuestionRepository questionRepository = new MemoryQuestionRepository();
+    private QuestionRepository questionRepository;
+
+//    @Autowired //- 생성자가 하나인 경우 지워도 알아서 됨.
+    public HomeController(QuestionRepository questionRepository) {
+        this.questionRepository = questionRepository;
+    }
+
     /**
      * TODO: showHome
      * showHomeV1 : parameter - HttpServletRequest, HttpServletResponse / return - ModelAndView
