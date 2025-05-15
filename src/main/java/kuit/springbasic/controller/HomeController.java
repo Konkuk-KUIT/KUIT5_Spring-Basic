@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import kuit.springbasic.db.QuestionRepository;
 import kuit.springbasic.domain.Question;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,13 +13,10 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.Collection;
 
 @Controller
+@RequiredArgsConstructor
 public class HomeController {
 
-    private QuestionRepository questionRepository;
-
-    public HomeController(QuestionRepository questionRepository) {
-        this.questionRepository = questionRepository;
-    }
+    private final QuestionRepository questionRepository;
 
     /**
      * TODO: showHome
