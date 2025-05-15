@@ -36,6 +36,10 @@ public class MemoryQuestionRepository implements QuestionRepository{
         questions.put(Integer.toString(question.getQuestionId()), question);
     }
 
+    public void deleteByQuestionId(int id) {
+        questions.remove(String.valueOf(id));
+    }
+
     public void updateCountOfAnswer(Question question) {
         Question repoQuestion = questions.get(Integer.toString(question.getQuestionId()));
         repoQuestion.updateCountofAnswer(question);
