@@ -36,7 +36,7 @@
                         <c:if test="${sessionScope.user.name == question.writer}">
                             <li>
                                 <a class="link-modify-article"
-                                   href="/qna/form?questionId=${question.questionId}">수정</a>
+                                   href="/qna/updateV2?questionId=${question.questionId}">수정</a>
                             </li>
                             <li>
                                 <a class="link-modify-article"

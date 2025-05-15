@@ -15,4 +15,6 @@ public interface QuestionRepository {
     void update(Question question);
 
     void updateCountOfAnswer(Question question);
+
+    void deleteById(int questionId);
 }

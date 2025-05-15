@@ -84,7 +84,7 @@ public class UserController {
      * updateUserV1 : @RequestParam
      * updateUserV2 : @ModelAttribute
      */
-    @PutMapping("/user/updateV1")
+    @PostMapping("/user/updateV1")
     public String updateUserV1(@RequestParam("userId") String userId,
                                @RequestParam("password") String password,
                                @RequestParam("name") String name,
@@ -94,7 +94,7 @@ public class UserController {
         return "redirect:/user/list";
     }
 
-    @PutMapping("/user/updateV2")
+    @PostMapping("/user/updateV2")
     public String updateUserV2(@ModelAttribute("user") User user) {
         userRepository.update(user);
         return "redirect:/user/list";
