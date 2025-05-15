@@ -10,6 +10,7 @@ import kuit.springbasic.domain.Question;
 import kuit.springbasic.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -32,6 +33,12 @@ public class HomeController {
      */
     @RequestMapping("/homeV1")
     public ModelAndView showHomeV1(HttpServletRequest request, HttpServletResponse response){
+        Collection<Question> questions = questionRepository.findAll();
+        return new ModelAndView("home").addObject("questions", questions);
+    }
+
+    @RequestMapping("/homeV2")
+    public ModelAndView showHomeV2(){
         Collection<Question> questions = questionRepository.findAll();
         return new ModelAndView("home").addObject("questions", questions);
     }
