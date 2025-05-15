@@ -44,7 +44,7 @@ public class QuestionController {
         Question newQuestion = new Question(writer, title, contents, 0);
         questionRepository.insert(newQuestion);
         log.info(newQuestion.toString());
-        return "redirect:/";
+        return "redirect:/qna/show?questionId=" + newQuestion.getQuestionId();
 
     }
 
@@ -52,8 +52,7 @@ public class QuestionController {
     public String createQuestionV2(@ModelAttribute Question question) {
         questionRepository.insert(question);
 //        log.info(question.toString());
-        System.out.println(question.toString());
-        return "redirect:/";
+        return "redirect:/qna/show?questionId=" + question.getQuestionId();
     }
 
     /**
@@ -104,7 +103,7 @@ public class QuestionController {
 
         questionRepository.update(originalQuestion);
 //        log.info(originalQuestion.toString());
-        return "redirect:/";
+        return "redirect:/qna/show?questionId=" + question.getQuestionId();
     }
 
     /**
