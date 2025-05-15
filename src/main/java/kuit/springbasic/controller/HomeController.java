@@ -42,4 +42,12 @@ public class HomeController {
         Collection<Question> questions = questionRepository.findAll();
         return new ModelAndView("home").addObject("questions", questions);
     }
+
+    @RequestMapping("/homeV3")
+    public String showHomeV3(Model model) {
+        Collection<Question> questions = questionRepository.findAll();
+        model.addAttribute("questions", questions);
+
+        return "home";
+    }
 }
