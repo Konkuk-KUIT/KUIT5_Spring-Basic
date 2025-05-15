@@ -103,7 +103,7 @@ public class LoginController {
 
         if (user != null && loginUser.isSameUser(user)) {
             HttpSession session = request.getSession();
-            session.setAttribute("user", loginUser);
+            session.setAttribute("user", user);
             return "redirect:/";
         }
         return "redirect:/user/loginFailed";
