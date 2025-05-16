@@ -34,7 +34,7 @@
                         <c:if test="${sessionScope.user.name == question.writer}">
                             <li>
                                 <a class="link-modify-article"
-                                   href="/qna/form?questionId=${question.questionId}">수정</a>
+                                   href="/qna/updateForm?questionId=${question.questionId}">수정</a>
                             </li>
                             <li>
                                 <a class="link-modify-article"
@@ -62,7 +62,7 @@
                                          class="article-author-thumb" alt="">
                                 </div>
                                 <div class="article-header-text">
-                                        ${each.writer}
+                                    ${each.writer}
                                     <div class="article-header-time">
                                         <fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${each.createdDate}"/>
                                     </div>
