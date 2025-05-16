@@ -2,19 +2,25 @@ package kuit.springbasic.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import kuit.springbasic.db.MemoryUserRepository;
 import kuit.springbasic.db.UserRepository;
 import kuit.springbasic.domain.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequiredArgsConstructor
 public class LoginController {
 
     private final UserRepository userRepository;
+
+    @Autowired
+    public LoginController(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     /**
      * TODO: showLoginForm

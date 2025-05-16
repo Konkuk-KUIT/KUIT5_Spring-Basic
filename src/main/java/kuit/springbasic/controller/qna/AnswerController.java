@@ -5,6 +5,7 @@ import kuit.springbasic.db.AnswerRepository;
 import kuit.springbasic.domain.Answer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,6 +28,37 @@ public class AnswerController {
      * addAnswerV2 : @RequestParam, @ResponseBody
      * addAnswerV3 : @ModelAttribute, @ResponseBody
      */
+
+    @PostMapping("/qna/addAnswerV1")
+    public String addAnswerV1(
+            @RequestParam int questionId,
+            @RequestParam String writer,
+            @RequestParam String contents
+    ) {
+        Answer answer = new Answer(questionId, writer, contents);
+        answerRepository.insert(answer);
+
+        return "redirect:/qna/show?questionId=" + questionId;
+    }
+
+    public Map<String, Object> addAnswerV2(
+            @RequestParam int questionId,
+            @RequestParam String writer,
+            @RequestParam String contents
+    ) {
+        Answer answer = new Answer(questionId, writer, contents);
+        answerRepository.insert(answer);
+
+        Map<String, Object> answerData = new HashMap<>();
+        answerData.put("writer", answer.getWriter());
+        answerData.put("createdDate", answer.getCreatedDate());
+        answerData.put("contents", answer.getContents());
+        answerData.put("answerId", answer.getAnswerId());
+
+        Map<String, Object> result = new HashMap<>();
+        result.put("answer", answerData);
+        return result;
+    }
 
     @PostMapping("/api/qna/addAnswer")
     @ResponseBody
