@@ -14,8 +14,9 @@ public class MemoryUserRepository implements UserRepository {
     private Map<String, User> users = new HashMap<>();
     private static MemoryUserRepository memoryUserRepository;
 
+    //name 쿠잇 -> kuit
     public MemoryUserRepository() {
-        insert(new User("kuit","kuit","쿠잇","kuit@kuit.com"));
+        insert(new User("kuit","kuit","kuit","kuit@kuit.com"));
     }
 
 
