@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import kuit.springbasic.db.UserRepository;
 import kuit.springbasic.domain.User;
+import kuit.springbasic.util.UserSessionUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -55,11 +56,10 @@ public class UserController {
     @RequestMapping("/user/list")
     public ModelAndView showUserList(HttpServletRequest request){
         HttpSession session = request.getSession();
-        Object user = session.getAttribute("user");
-        if(user == null) {
-            return new ModelAndView("redirect:/user/loginForm");
+        if(UserSessionUtils.isLoggedIn(session)) {
+            return new ModelAndView("user/list").addObject("users", userRepository.findAll());
         }
-        return new ModelAndView("user/list").addObject("users", userRepository.findAll());
+        return new ModelAndView("redirect:/user/loginForm");
     }
 
     /**
@@ -68,14 +68,14 @@ public class UserController {
     @RequestMapping("/user/updateForm")
     public ModelAndView showUserUpdateForm(@RequestParam("userId") String userId, HttpServletRequest request){
         HttpSession session = request.getSession();
-        Object user = session.getAttribute("user");
-        if(user == null) {
+        if(!UserSessionUtils.isLoggedIn(session)) {
             return new ModelAndView("redirect:/user/loginForm");
         }
-        if(!((User)user).getUserId().equals(userId)){
+        User userFromSession = UserSessionUtils.getUserFromSession(session);
+        if(!userFromSession.getUserId().equals(userId)){
             return new ModelAndView("redirect:/user/list");
         }
-        return new ModelAndView("user/updateForm").addObject("user", (User)user);
+        return new ModelAndView("user/updateForm").addObject("user", userFromSession);
     }
 
     /**
