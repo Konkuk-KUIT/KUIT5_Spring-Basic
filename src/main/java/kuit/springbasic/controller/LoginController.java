@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import static kuit.springbasic.util.UserSessionUtils.USER_SESSION_KEY;
+
 @Controller
 @RequiredArgsConstructor
 public class LoginController {
@@ -47,7 +49,7 @@ public class LoginController {
 
         if(findUser != null && loginUser.isSameUser(findUser)) {
             HttpSession session = request.getSession();
-            session.setAttribute("user", findUser);
+            session.setAttribute(USER_SESSION_KEY, findUser);
             return "redirect:/";
         }
         return "redirect:/user/loginFailed";
@@ -59,7 +61,7 @@ public class LoginController {
     @RequestMapping("/user/logout")
     public String logout(HttpServletRequest request) {
         HttpSession session = request.getSession();
-        session.removeAttribute("user");
+        session.removeAttribute(USER_SESSION_KEY);
         return "redirect:/";
     }
 }
