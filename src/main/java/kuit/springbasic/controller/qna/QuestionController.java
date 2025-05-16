@@ -1,19 +1,13 @@
 package kuit.springbasic.controller.qna;
 
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import kuit.springbasic.domain.Question;
 import kuit.springbasic.domain.User;
 import kuit.springbasic.service.QuestionService;
-import kuit.springbasic.util.UserSessionUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -25,12 +19,9 @@ public class QuestionController {
      * TODO: showQuestionForm
      */
     @RequestMapping("/qna/form")
-    public String showQuestionForm(HttpSession session) {
+    public String showQuestionForm() {
 
-        if (UserSessionUtils.isLoggedIn(session)) {
-            return "/qna/form";
-        }
-        return "redirect:/user/loginForm";
+        return "/qna/form";
     }
 
     /**
@@ -58,11 +49,8 @@ public class QuestionController {
      * showUpdateQuestionFormV2 : @RequestParam, @SessionAttribute, Model
      */
     @RequestMapping(value = "/qna/updateForm/{questionId}")
-    public String showUpdateQuestionFormV1(@PathVariable("questionId") int questionId, HttpSession session,
+    public String showUpdateQuestionFormV1(@PathVariable("questionId") int questionId,
                                            Model model) {
-        if (!UserSessionUtils.isLoggedIn(session)) {
-            return "redirect:/";
-        }
 
         Question question = questionService.findById(questionId);
         model.addAttribute("question", question);

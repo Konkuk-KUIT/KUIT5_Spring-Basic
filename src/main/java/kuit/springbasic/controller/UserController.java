@@ -3,7 +3,6 @@ package kuit.springbasic.controller;
 import jakarta.servlet.http.HttpSession;
 import kuit.springbasic.domain.User;
 import kuit.springbasic.service.UserService;
-import kuit.springbasic.util.UserSessionUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -50,15 +49,13 @@ public class UserController {
     /**
      * TODO: showUserList
      */
+    // UserController
     @RequestMapping("/user/list")
-    public ModelAndView showUserList(HttpSession session) {
-        if (UserSessionUtils.isLoggedIn(session)) {
-            List<User> users = userService.findAll();
+    public ModelAndView showUserList() {
+        List<User> users = userService.findAll();
 
-            return new ModelAndView("/user/list")
-                    .addObject("users", users);
-        }
-        return new ModelAndView("redirect:/user/loginForm");
+        return new ModelAndView("/user/list")
+                .addObject("users", users);
     }
 
     /**
