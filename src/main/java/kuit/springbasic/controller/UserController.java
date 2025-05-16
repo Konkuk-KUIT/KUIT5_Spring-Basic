@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Collection;
 
@@ -22,37 +23,45 @@ public class UserController {
         return "user/form";
     }
 
-    @PostMapping("/create")
-    public String createUser(@RequestParam("userId") String userId,
-                             @RequestParam("password") String password,
-                             @RequestParam("name") String name,
-                             @RequestParam("email") String email) {
+    @PostMapping("/create/v1")
+    public ModelAndView createUserV1(@RequestParam String userId,
+                                     @RequestParam String password,
+                                     @RequestParam String name,
+                                     @RequestParam String email) {
         User user = new User(userId, password, name, email);
         userRepository.insert(user);
-        return "redirect:/homeV2";
+        return new ModelAndView("redirect:/users");
+    }
+
+    @PostMapping("/create/v2")
+    public String createUserV2(@ModelAttribute User user) {
+        userRepository.insert(user);
+        return "redirect:/users";
     }
 
     @GetMapping
     public String showUserList(Model model) {
-        Collection<User> users = userRepository.findAll();
-        model.addAttribute("users", users);
+        model.addAttribute("users", userRepository.findAll());
         return "user/list";
     }
 
-    @GetMapping("/updateForm")
-    public String showUserUpdateForm(HttpServletRequest request, Model model) {
+    @GetMapping("/updateForm/v1")
+    public String showUserUpdateFormV1(HttpServletRequest request, Model model) {
         String userId = request.getParameter("userId");
         User user = userRepository.findByUserId(userId);
         model.addAttribute("user", user);
         return "user/updateForm";
     }
 
-    @PostMapping("/update")
-    public String updateUser(@RequestParam("userId") String userId,
-                             @RequestParam("password") String password,
-                             @RequestParam("name") String name,
-                             @RequestParam("email") String email) {
-        User user = new User(userId, password, name, email);
+    @GetMapping("/updateForm/v2")
+    public String showUserUpdateFormV2(@RequestParam String userId, Model model) {
+        User user = userRepository.findByUserId(userId);
+        model.addAttribute("user", user);
+        return "user/updateForm";
+    }
+
+    @PostMapping("/update/v2")
+    public String updateUserV2(@ModelAttribute User user) {
         userRepository.update(user);
         return "redirect:/users";
     }
