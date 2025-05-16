@@ -41,6 +41,7 @@ public class AnswerController {
         return "redirect:/qna/show?questionId=" + questionId;
     }
 
+    @ResponseBody
     public Map<String, Object> addAnswerV2(
             @RequestParam int questionId,
             @RequestParam String writer,
