@@ -15,7 +15,7 @@ public class MemoryUserRepository implements UserRepository {
     private static MemoryUserRepository memoryUserRepository;
 
     public MemoryUserRepository() {
-        insert(new User("kuit","kuit","쿠잇","kuit@kuit.com"));
+        insert(new User("1","1","쿠잇","kuit@kuit.com"));
     }
 
 

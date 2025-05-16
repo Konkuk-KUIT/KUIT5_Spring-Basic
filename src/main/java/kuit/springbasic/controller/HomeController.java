@@ -11,6 +11,7 @@ import kuit.springbasic.db.QuestionRepository;
 import kuit.springbasic.db.UserRepository;
 import kuit.springbasic.domain.Question;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,7 +36,7 @@ public class HomeController {
      * showHomeV3 : parameter - Model / return - String
      */
 
-    @RequestMapping("/")
+    @RequestMapping("/home")
     public ModelAndView showHomeV1(HttpServletRequest request, HttpServletResponse response) {
         Collection<Question> questions = questionRepository.findAll();
         return new ModelAndView("home")

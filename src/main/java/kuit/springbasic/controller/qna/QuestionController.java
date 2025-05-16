@@ -47,19 +47,29 @@ public class QuestionController {
             return "redirect:/user/login";
         }
 
-
         Question question = new Question();
         question.setWriter(writerFromForm);
         question.setTitle(title);
         question.setContents(contents);
         question.setCreatedDate(new Date(System.currentTimeMillis()));
-
-
         questionRepository.insert(question);
 
         return "redirect:/";
     }
 
+    @PostMapping("/create2")
+    public String createQuestion2(@ModelAttribute Question question,
+                                 HttpServletRequest request) {
+
+        HttpSession session = request.getSession(false);
+        if (session == null || session.getAttribute("user") == null) {
+            return "redirect:/user/login";
+        }
+        question.setCreatedDate(new Date(System.currentTimeMillis()));
+        questionRepository.insert(question);
+
+        return "redirect:/";
+    }
 
 
 
