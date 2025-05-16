@@ -92,13 +92,13 @@ public class UserController {
             @RequestParam("password") String password,
             @RequestParam("name") String name,
             @RequestParam("email") String email
-    ) throws Exception {
+    ) {
         User updateUser = new User(userId, password, name, email);
         userRepository.update(updateUser);
         return "redirect:/user/list";
     }
 
-    public String updateUserV2(@ModelAttribute User user) throws Exception {
+    public String updateUserV2(@ModelAttribute User user) {
         userRepository.update(user);
         return "redirect:/user/list";
     }
