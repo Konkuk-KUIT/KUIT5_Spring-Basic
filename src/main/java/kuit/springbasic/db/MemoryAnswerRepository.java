@@ -1,6 +1,7 @@
 package kuit.springbasic.db;
 
 
+import jakarta.annotation.PostConstruct;
 import kuit.springbasic.domain.Answer;
 import org.springframework.stereotype.Repository;
 
@@ -36,7 +37,6 @@ public class MemoryAnswerRepository implements AnswerRepository {
 
         return result;
     }
-
 
     public Answer insert(Answer answer) {
         answer.setAnswerId(getPK());
