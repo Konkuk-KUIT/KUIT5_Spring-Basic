@@ -2,6 +2,8 @@ package kuit.springbasic.domain;
 
 
 import java.sql.Date;
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.LocalDate;
 
 public class Question {
@@ -32,6 +34,14 @@ public class Question {
         this.contents = contents;
         this.createdDate = Date.valueOf(LocalDate.now());
         this.countOfAnswer = countOfAnswer;
+    }
+
+    public Question(String writer, String title, String contents) {
+        this.writer = writer;
+        this.title = title;
+        this.contents = contents;
+        this.createdDate = Date.valueOf(LocalDate.now());
+        this.countOfAnswer = 0;
     }
 
     public int getQuestionId() {
