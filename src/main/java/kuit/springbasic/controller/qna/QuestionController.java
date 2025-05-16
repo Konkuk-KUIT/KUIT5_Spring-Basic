@@ -58,9 +58,8 @@ public class QuestionController {
      * showUpdateQuestionFormV2 : @RequestParam, @SessionAttribute, Model
      */
     @RequestMapping(value = "/qna/updateForm/{questionId}")
-    public String showUpdateQuestionFormV1(@PathVariable("questionId") int questionId, HttpServletRequest request,
+    public String showUpdateQuestionFormV1(@PathVariable("questionId") int questionId, HttpSession session,
                                            Model model) {
-        HttpSession session = request.getSession();
         if (!UserSessionUtils.isLoggedIn(session)) {
             return "redirect:/";
         }

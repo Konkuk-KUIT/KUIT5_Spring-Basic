@@ -1,6 +1,5 @@
 package kuit.springbasic.controller;
 
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import kuit.springbasic.domain.User;
 import kuit.springbasic.service.UserService;
@@ -42,13 +41,12 @@ public class LoginController {
     @RequestMapping("/user/login")
     public String loginV1(@RequestParam("userId") String userId,
                           @RequestParam("password") String password,
-                          HttpServletRequest request) {
+                          HttpSession session) {
         User findUser = userService.findByIdAndPassword(userId, password);
         if (findUser == null) {
             return "redirect:/user/loginFailed";
         }
 
-        HttpSession session = request.getSession();
         session.setAttribute("user", findUser);
         return "redirect:/";
     }
@@ -56,13 +54,12 @@ public class LoginController {
     @RequestMapping("/user/loginV2")
     public String loginV2(@RequestParam String userId,
                           @RequestParam String password,
-                          HttpServletRequest request) {
+                          HttpSession session) {
         User findUser = userService.findByIdAndPassword(userId, password);
         if (findUser == null) {
             return "redirect:/user/loginFailed";
         }
 
-        HttpSession session = request.getSession();
         session.setAttribute("user", findUser);
         return "redirect:/";
     }
@@ -70,26 +67,24 @@ public class LoginController {
     @RequestMapping("/user/loginV3")
     public String loginV3(String userId,
                           String password,
-                          HttpServletRequest request) {
+                          HttpSession session) {
         User findUser = userService.findByIdAndPassword(userId, password);
         if (findUser == null) {
             return "redirect:/user/loginFailed";
         }
 
-        HttpSession session = request.getSession();
         session.setAttribute("user", findUser);
         return "redirect:/";
     }
 
     @RequestMapping("/user/loginV4")
     public String loginV4(@ModelAttribute User user,
-                          HttpServletRequest request) {
+                          HttpSession session) {
         User findUser = userService.findByIdAndPassword(user);
         if (findUser == null) {
             return "redirect:/user/loginFailed";
         }
 
-        HttpSession session = request.getSession();
         session.setAttribute("user", findUser);
         return "redirect:/";
     }
@@ -98,8 +93,7 @@ public class LoginController {
      * TODO: logout
      */
     @RequestMapping("/user/logout")
-    public String logOut(HttpServletRequest request) {
-        HttpSession session = request.getSession();
+    public String logOut(HttpSession session) {
         session.removeAttribute("user");
         return "redirect:/";
     }

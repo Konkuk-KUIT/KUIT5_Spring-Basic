@@ -1,8 +1,6 @@
 package kuit.springbasic.controller;
 
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import java.util.List;
 import kuit.springbasic.domain.User;
 import kuit.springbasic.service.UserService;
 import kuit.springbasic.util.UserSessionUtils;
@@ -12,6 +10,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -51,8 +51,7 @@ public class UserController {
      * TODO: showUserList
      */
     @RequestMapping("/user/list")
-    public ModelAndView showUserList(HttpServletRequest request) {
-        HttpSession session = request.getSession();
+    public ModelAndView showUserList(HttpSession session) {
         if (UserSessionUtils.isLoggedIn(session)) {
             List<User> users = userService.findAll();
 
