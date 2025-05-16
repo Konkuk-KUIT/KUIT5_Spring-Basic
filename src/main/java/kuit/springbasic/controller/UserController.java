@@ -39,7 +39,7 @@ public class UserController {
                                      @RequestParam("email") String email) {
         User user = new User(userId, password, name, email);
         userService.save(user);
-        return new ModelAndView("redirect:/user/list");
+        return new ModelAndView("redirect:/user/loginForm");
     }
 
     public ModelAndView createUserV2(@ModelAttribute User user) {
