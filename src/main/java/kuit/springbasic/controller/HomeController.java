@@ -9,6 +9,7 @@ import kuit.springbasic.db.QuestionRepository;
 import kuit.springbasic.db.UserRepository;
 import kuit.springbasic.domain.Question;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -24,12 +25,28 @@ public class HomeController {
      * showHomeV3 : parameter - Model / return - String
      */
 
-    private QuestionRepository questionRepository=new MemoryQuestionRepository();
+    private QuestionRepository questionRepository;
 
-    @RequestMapping("/homeV1")
+    public HomeController(QuestionRepository questionRepository){
+        this.questionRepository = questionRepository;
+    }
+
+    /*@RequestMapping("/homeV1")
     public ModelAndView showHomeV1(HttpServletRequest request, HttpServletResponse response){
         Collection<Question> questions=questionRepository.findAll();
         return new ModelAndView("home")
                 .addObject("questions", questions);
+    }
+    @RequestMapping("/homeV2")
+    public ModelAndView showHomeV2(){
+        Collection<Question> questions=questionRepository.findAll();
+        return new ModelAndView("home")
+                .addObject("questions", questions);
+    }*/
+    @RequestMapping("/homeV3")
+    public String showHomeV3(Model model){
+        Collection<Question> questions=questionRepository.findAll();
+        model.addAttribute("questions", questions);
+        return "home";
     }
 }
