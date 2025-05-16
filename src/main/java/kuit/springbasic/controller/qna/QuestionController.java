@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
@@ -57,8 +56,8 @@ public class QuestionController {
      * showUpdateQuestionFormV1 : @RequestParam, HttpServletRequest, Model
      * showUpdateQuestionFormV2 : @RequestParam, @SessionAttribute, Model
      */
-    @RequestMapping(value = "/qna/updateForm/{questionId}")
-    public String showUpdateQuestionFormV1(@PathVariable("questionId") int questionId, HttpServletRequest request,
+    @RequestMapping(value = "/qna/updateForm")
+    public String showUpdateQuestionFormV1(@RequestParam("questionId") int questionId, HttpServletRequest request,
                                            Model model) {
         HttpSession session = request.getSession();
         if (!UserSessionUtils.isLoggedIn(session)) {
@@ -70,7 +69,7 @@ public class QuestionController {
         return "/qna/updateForm";
     }
 
-    public String showUpdateQuestionFormV2(@PathVariable("questionId") int questionId,
+    public String showUpdateQuestionFormV2(@RequestParam("questionId") int questionId,
                                            @SessionAttribute(name = "user", required = false) User user,
                                            Model model) {
         if (user == null) {
