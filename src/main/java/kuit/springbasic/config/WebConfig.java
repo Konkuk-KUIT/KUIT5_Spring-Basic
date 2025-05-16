@@ -2,13 +2,16 @@ package kuit.springbasic.config;
 
 import kuit.springbasic.filter.AuthFilter;
 import kuit.springbasic.filter.SessionAuthFilter;
+import kuit.springbasic.interceptor.SameUserInterceptor;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-public class WebConfig {
+public class WebConfig implements WebMvcConfigurer {
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
@@ -21,11 +24,19 @@ public class WebConfig {
         registrationBean.setFilter(new SessionAuthFilter()); // 사용할 필터 객체
         registrationBean.addUrlPatterns(
                 "/user/list", "/user/updateForm/**", "/user/update/**",
-                "/qna/form", "/qna/updateForm/**", "/qna/create",
+                "/qna/form", "/qna/updateForm/**", "/qna/update", "/qna/create",
                 "/api/qna/addAnswer"
                 );        // 필터를 적용할 URL 패턴
         registrationBean.setOrder(1);                 // 필터 순서 (낮을수록 먼저 실행)
         return registrationBean;
     }
 
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new SameUserInterceptor())
+                .addPathPatterns(
+                        "/user/updateForm/**", "/user/update/**",
+                        "/qna/updateForm/**", "/qna/update"
+                );
+    }
 }
