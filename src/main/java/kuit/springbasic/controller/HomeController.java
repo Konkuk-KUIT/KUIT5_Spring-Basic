@@ -2,13 +2,11 @@ package kuit.springbasic.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import kuit.springbasic.db.MemoryQuestionRepository;
 import kuit.springbasic.db.QuestionRepository;
 import kuit.springbasic.domain.Question;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -47,7 +45,7 @@ public class HomeController {
                 .addObject("questions", questions);
     }
 
-    @RequestMapping("/homeV3")
+    @RequestMapping("/")
     public String showHomeV3(Model model) {
         Collection<Question> questions = questionRepository.findAll();
         model.addAttribute("questions", questions);

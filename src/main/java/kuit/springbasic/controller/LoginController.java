@@ -6,6 +6,7 @@ import kuit.springbasic.db.UserRepository;
 import kuit.springbasic.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -39,7 +40,7 @@ public class LoginController {
      * loginV4 : @ModelAttribute
      */
     @RequestMapping("/user/login")
-    public String login(@RequestParam("userId") String userId,
+    public String loginV1(@RequestParam("userId") String userId,
                         @RequestParam("password") String password,
                         HttpServletRequest request){
         User findUser = userRepository.findByUserId(userId);
@@ -48,7 +49,49 @@ public class LoginController {
         if (findUser!=null && loginUser.isSameUser(findUser)){
             HttpSession session = request.getSession();
             session.setAttribute("user", loginUser);
-            return "redirect:/homeV1";
+            return "redirect:/";
+        }
+        return "redirect:/user/loginFailed";
+    }
+
+    @RequestMapping("/user/loginV2")
+    public String loginV2(@RequestParam String userId,
+                          @RequestParam String password,
+                          HttpServletRequest request){
+        User findUser = userRepository.findByUserId(userId);
+        User loginUser = new User(userId, password);
+
+        if (findUser!=null && loginUser.isSameUser(findUser)){
+            HttpSession session = request.getSession();
+            session.setAttribute("user", loginUser);
+            return "redirect:/";
+        }
+        return "redirect:/user/loginFailed";
+    }
+
+    @RequestMapping("/user/loginV3")
+    public String loginV3(String userId,
+                          String password,
+                          HttpServletRequest request){
+        User findUser = userRepository.findByUserId(userId);
+        User loginUser = new User(userId, password);
+
+        if (findUser!=null && loginUser.isSameUser(findUser)){
+            HttpSession session = request.getSession();
+            session.setAttribute("user", loginUser);
+            return "redirect:/";
+        }
+        return "redirect:/user/loginFailed";
+    }
+    @RequestMapping("/user/loginV4")
+    public String loginV4(@ModelAttribute User user,
+                          HttpServletRequest request){
+        User findUser = userRepository.findByUserId(user.getUserId());
+
+        if (findUser!=null && user.isSameUser(findUser)){
+            HttpSession session = request.getSession();
+            session.setAttribute("user", user);
+            return "redirect:/";
         }
         return "redirect:/user/loginFailed";
     }
@@ -56,5 +99,11 @@ public class LoginController {
     /**
      * TODO: logout
      */
+    @RequestMapping("/user/logout")
+    public String logout(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        session.removeAttribute("user");
+        return "redirect:/";
+    }
 
 }
