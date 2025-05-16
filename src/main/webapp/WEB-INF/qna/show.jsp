@@ -62,7 +62,7 @@
                                          class="article-author-thumb" alt="">
                                 </div>
                                 <div class="article-header-text">
-                                        ${each.writer}
+                                    ${each.writer}
                                     <div class="article-header-time">
                                         <fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${each.createdDate}"/>
                                     </div>

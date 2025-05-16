@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import static kuit.springbasic.util.UserSessionUtils.USER_SESSION_KEY;
+
 @Controller
 @RequiredArgsConstructor
 public class LoginController {
@@ -78,7 +80,7 @@ public class LoginController {
 
         if (findUser!=null && loginUser.isSameUser(findUser)){
             HttpSession session = request.getSession();
-            session.setAttribute("user", loginUser);
+            session.setAttribute(USER_SESSION_KEY, loginUser);
             return "redirect:/";
         }
         return "redirect:/user/loginFailed";

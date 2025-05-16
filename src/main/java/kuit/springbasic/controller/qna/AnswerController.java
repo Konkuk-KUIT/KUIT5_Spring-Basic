@@ -1,6 +1,5 @@
 package kuit.springbasic.controller.qna;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletResponse;
 import kuit.springbasic.db.AnswerRepository;
@@ -9,7 +8,7 @@ import kuit.springbasic.domain.Answer;
 import kuit.springbasic.domain.Question;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
@@ -31,7 +30,7 @@ public class AnswerController {
      * addAnswerV3 : @ModelAttribute, @ResponseBody
      */
 
-    @RequestMapping("/api/qna/addAnswer")
+    @PostMapping("/api/qna/addAnswer")
     public void addAnswerV0(
             @RequestParam("questionId") String questionId,
             @RequestParam("writer") String writer,
