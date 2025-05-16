@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import kuit.springbasic.db.QuestionRepository;
 import kuit.springbasic.domain.Question;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +15,7 @@ import java.net.http.HttpResponse;
 import java.util.Collection;
 import java.util.Queue;
 
+@RequiredArgsConstructor
 @Controller
 public class HomeController {
     private QuestionRepository questionRepository;

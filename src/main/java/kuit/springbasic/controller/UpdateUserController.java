@@ -3,20 +3,17 @@ package kuit.springbasic.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import kuit.springbasic.db.UserRepository;
 import kuit.springbasic.domain.User;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+@RequiredArgsConstructor
 @Controller
 public class UpdateUserController {
 
     private final UserRepository userRepository;
-
-    @Autowired
-    public UpdateUserController(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
     @PostMapping("/users/update")
     public ModelAndView updateUser(HttpServletRequest request) {
