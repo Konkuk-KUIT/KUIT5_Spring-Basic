@@ -4,6 +4,7 @@ import java.util.List;
 import kuit.springbasic.db.UserRepository;
 import kuit.springbasic.domain.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -11,12 +12,13 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public User findByIdAndPassword(String userId, String password) {
         User findUser = findById(userId);
-        User loginUser = new User(userId, password);
 
-        if (findUser != null && loginUser.isSameUser(findUser)) {
+        // 비밀번호 해시 값 비교
+        if (findUser != null && passwordEncoder.matches(password, findUser.getPassword())) {
             return findUser;
         }
         return null;
@@ -25,7 +27,8 @@ public class UserService {
     public User findByIdAndPassword(User loginUser) {
         User findUser = findById(loginUser.getUserId());
 
-        if (findUser != null && loginUser.isSameUser(findUser)) {
+        // 비밀번호 해시 값 비교
+        if (findUser != null && passwordEncoder.matches(loginUser.getPassword(), findUser.getPassword())) {
             return findUser;
         }
         return null;
@@ -36,6 +39,8 @@ public class UserService {
     }
 
     public void save(User user) {
+        // 비밀번호 암호화
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.insert(user);
     }
 
@@ -45,14 +50,13 @@ public class UserService {
 
     public boolean isSame(User user, User findUser) {
         if (findUser != null && user != null) {
-            if (findUser.equals(user)) {
-                return true;
-            }
+            return findUser.equals(user);
         }
         return false;
     }
 
     public void update(User modifiedUser) {
+        modifiedUser.setPassword(passwordEncoder.encode(modifiedUser.getPassword()));
         userRepository.update(modifiedUser);
     }
 }
