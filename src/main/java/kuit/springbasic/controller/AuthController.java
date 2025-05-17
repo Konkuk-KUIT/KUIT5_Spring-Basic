@@ -16,19 +16,23 @@ public class AuthController {
     private final JwtTokenProvider jwtTokenProvider;
     private final UserService userService;
 
+    // jwt를 얻는 api
     @GetMapping("/getToken")
     public JwtInfo getToken() {
         User kuit = userService.findById("kuit");
         return jwtTokenProvider.createToken(kuit.getEmail(), kuit.getUserId());
     }
 
+    // 일반 인가 범위
     @GetMapping("/auth")
     public String auth() {
         return "ok";
     }
 
+    // 인터셉터를 통한 loginUserId
+    // 응답 결과로 "ok, loginUserId = kuit" 이 나와야 함
     @GetMapping("/auth/userId")
     public String authUserId(@RequestParam("loginUserId") String loginUserId) {
-        return "ok" + loginUserId;
+        return "ok, loginUserId = " + loginUserId;
     }
 }
