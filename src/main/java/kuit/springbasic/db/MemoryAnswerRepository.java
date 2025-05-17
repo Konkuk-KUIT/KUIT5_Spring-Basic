@@ -1,12 +1,15 @@
 package kuit.springbasic.db;
 
 
-import kuit.springbasic.domain.Answer;
-import org.springframework.stereotype.Repository;
-
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import kuit.springbasic.domain.Answer;
+import org.springframework.stereotype.Repository;
 
 @Repository
 public class MemoryAnswerRepository implements AnswerRepository {
@@ -15,8 +18,7 @@ public class MemoryAnswerRepository implements AnswerRepository {
     private static int PK = 0;
 
     public MemoryAnswerRepository() {
-        insert(new Answer(0, "박지원", "밥 사주세요"));
-        insert(new Answer(1, "함형주", "?? 내가 더 잘하는데 ??"));
+        insert(new Answer(1, "박지원", "밥 사주세요"));
     }
 
     public int getPK() {
