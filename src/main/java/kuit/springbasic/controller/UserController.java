@@ -63,7 +63,7 @@ public class UserController {
     /**
      * TODO: showUserUpdateForm
      */
-    @GetMapping("/updateForm")
+    //@GetMapping("/updateForm")
     public String showUserUpdateForm(HttpServletRequest request,
                                      Model model) {
         String userId = request.getParameter("userId");
@@ -78,12 +78,31 @@ public class UserController {
         }
         return "redirect:/";
     }
+
+    @GetMapping("/updateForm")
+    public String showUserUpdateFormV2(HttpServletRequest request,
+                                     Model model) {
+        String userId = request.getParameter("userId");
+        User user = userRepository.findByUserId(userId);
+
+        HttpSession session = request.getSession();
+        Object value = session.getAttribute("user");
+
+        if (user != null && value != null) {
+            if (user.equals(value)) {            // 수정되는 user와 수정하는 user가 동일한 경우
+                return "/user/updateForm";
+            }
+        }
+        return "redirect:/";
+    }
+
+
     /**
      * TODO: updateUser
      * updateUserV1 : @RequestParam
      * updateUserV2 : @ModelAttribute
      */
-    //@GetMapping("/user/update")
+    //@PostMapping("/user/update")
     public String updateUserV1(@RequestParam("userId")String userId,
                                @RequestParam("password")String password,
                                @RequestParam("name")String name,
@@ -92,7 +111,7 @@ public class UserController {
         return "redirect:/user/list";
     }
 
-    @PostMapping("/update")
+    //@PostMapping("/update")
     public String updateUserV2(@ModelAttribute User user,
                                HttpServletRequest request) {
         userRepository.update(user);
@@ -101,4 +120,11 @@ public class UserController {
         session.setAttribute(USER_SESSION_KEY, user);
         return "redirect:/user/list";
     }
+
+    @PostMapping("/update")
+    public String updateUserV3(@ModelAttribute User user) {
+        userRepository.update(user);
+        return "redirect:/user/list";
+    }
+
 }
