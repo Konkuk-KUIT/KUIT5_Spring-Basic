@@ -35,8 +35,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new SameUserInterceptor())
                 .addPathPatterns(
-                        "/user/updateForm/**", "/user/update/**",
-                        "/qna/updateForm/**", "/qna/update"
+                        "/user/updateForm/**", "/user/update/**"
                 );
     }
 }
