@@ -8,7 +8,7 @@ public class SessionAuthFilter extends AuthFilter {
 
     @Override
     protected boolean isAuthenticated(HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
+        HttpSession session = request.getSession();
         return UserSessionUtils.isLoggedIn(session);
     }
 }
