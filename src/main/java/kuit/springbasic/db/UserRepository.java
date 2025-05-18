@@ -1,6 +1,7 @@
 package kuit.springbasic.db;
 
 import kuit.springbasic.domain.User;
+import org.springframework.context.annotation.Bean;
 
 import java.util.Collection;
 
