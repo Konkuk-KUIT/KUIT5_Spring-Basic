@@ -43,7 +43,7 @@ public class HomeController {
         return new ModelAndView("home")
                 .addObject("questions", questions);
     }*/
-    @RequestMapping("/homeV3")
+    @RequestMapping("/home")
     public String showHomeV3(Model model){
         Collection<Question> questions=questionRepository.findAll();
         model.addAttribute("questions", questions);

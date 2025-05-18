@@ -70,9 +70,9 @@ public class LoginController {
             return "redirect:/";
         }
         return "redirect:/user/loginFailed";
-    }*/
+    }
 
-    @RequestMapping("/loginV3")
+    /*@RequestMapping("/loginV3")
     public String loginV3(String userId, String password,
                           HttpServletRequest request) {
 
@@ -85,9 +85,9 @@ public class LoginController {
             return "redirect:/";
         }
         return "redirect:/user/loginFailed";
-    }
+    }*/
 
-    @RequestMapping("/loginV4")
+    @RequestMapping("/login")
     public String loginV4(@ModelAttribute User user,
                           HttpServletRequest request) {
 
