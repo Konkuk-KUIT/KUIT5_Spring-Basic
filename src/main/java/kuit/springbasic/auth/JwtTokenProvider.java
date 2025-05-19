@@ -69,6 +69,15 @@ public class JwtTokenProvider {
         return getUserId(payload);
     }
 
+    // refreshToken 검증 메서드
+    public String validateRefreshToken(String token){
+        Claims payload = Jwts.parser()
+                .verifyWith(refreshSecretKey).build()
+                .parseSignedClaims(token).getPayload();
+
+        return getUserId(payload);
+    }
+
     private String getUserId(Claims payload) {
         return payload.get("userId", String.class);
     }
