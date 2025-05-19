@@ -12,6 +12,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 @Component
 public class SameUserInterceptor implements HandlerInterceptor {
 
+    // 인가에 대한 부분이어서 controller 진입 전에 preHandler 사용
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 

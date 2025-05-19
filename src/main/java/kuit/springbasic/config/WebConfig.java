@@ -13,11 +13,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
+    // spring security 에 포함된 객체
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+    // 만들어둔 필터 등록 -  서블릿 url 패턴
     @Bean
     public FilterRegistrationBean<AuthFilter> authFilter() {
         FilterRegistrationBean<AuthFilter> registrationBean = new FilterRegistrationBean<>();
@@ -32,6 +34,7 @@ public class WebConfig implements WebMvcConfigurer {
         return registrationBean;
     }
 
+    // 스프링 패스 패턴
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new SameUserInterceptor())
