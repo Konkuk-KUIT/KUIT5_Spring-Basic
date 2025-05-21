@@ -7,6 +7,7 @@ import kuit.springbasic.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -25,6 +26,7 @@ public class AuthController {
 
     // 일반 인가 범위
     @GetMapping("/auth")
+    @ResponseBody
     public String auth() {
         return "ok";
     }
@@ -32,6 +34,7 @@ public class AuthController {
     // 인터셉터를 통한 loginUserId
     // 응답 결과로 "ok, loginUserId = kuit" 이 나와야 함
     @GetMapping("/auth/userId")
+    @ResponseBody
     public String authUserId(@RequestParam("loginUserId") String loginUserId) {
         return "ok, loginUserId = " + loginUserId;
     }
