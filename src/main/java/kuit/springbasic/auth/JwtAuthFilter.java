@@ -17,17 +17,26 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+            throws ServletException, IOException {
 
         String token = resolveToken(request);
 
-        String loginUserId = (token != null) ? jwtTokenProvider.validateToken(token) : null;
+        if (token != null) {
+            try {
+                // validateToken()은 유효성 검사 + userId 반환
+                String loginUserId = jwtTokenProvider.validateToken(token);
 
-        if (loginUserId != null) {
-            request.setAttribute("loginUserId", loginUserId);
+                // loginUserId를 request attribute에 저장
+                request.setAttribute("loginUserId", loginUserId);
+            } catch (Exception e) {
+                // 만료되거나 위조된 토큰 → JwtExceptionFilter가 처리함
+                // 예외를 던지면 JwtExceptionFilter에서 캐치 가능
+                throw e;
+            }
         }
 
-        //다음필터로 넘어가기
+        // 다음 필터로 넘김
         filterChain.doFilter(request, response);
     }
 
@@ -35,7 +44,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         String bearerToken = request.getHeader("Authorization");
 
         if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
-            return bearerToken.substring(7); // "Bearer " 뒷부분만 추출
+            return bearerToken.substring(7);
         }
 
         return null;
