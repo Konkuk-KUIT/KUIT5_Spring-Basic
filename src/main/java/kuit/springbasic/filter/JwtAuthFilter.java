@@ -14,14 +14,10 @@ public class JwtAuthFilter extends AuthFilter{
         if(token == null) {
             return false;
         }
-        try {
-            String loginUserId = jwtTokenProvider.validateToken(token);
-            request.setAttribute("loginUserId", loginUserId);
-            return true;
-        } catch (Exception e) {
-            System.out.println("JWT 인증 실패: " + e.getMessage());
-            return false;
-        }
+
+        String loginUserId = jwtTokenProvider.validateToken(token);
+        request.setAttribute("loginUserId", loginUserId);
+        return true;
     }
 
     private String resolveToken(HttpServletRequest request) {
