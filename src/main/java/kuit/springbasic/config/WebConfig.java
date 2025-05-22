@@ -3,6 +3,7 @@ package kuit.springbasic.config;
 import kuit.springbasic.auth.JwtTokenProvider;
 import kuit.springbasic.filter.AuthFilter;
 import kuit.springbasic.filter.JwtAuthFilter;
+import kuit.springbasic.filter.JwtExceptionFilter;
 import kuit.springbasic.filter.SessionAuthFilter;
 import kuit.springbasic.interceptor.SameUserInterceptor;
 import lombok.RequiredArgsConstructor;
@@ -23,9 +24,9 @@ public class WebConfig implements WebMvcConfigurer {
     }
 
     @Bean
-    public FilterRegistrationBean<JwtAuthFilter> jwtAuthFilterFilterRegistrationBean() {
-        FilterRegistrationBean<JwtAuthFilter> registrationBean = new FilterRegistrationBean<>();
-        registrationBean.setFilter(new JwtAuthFilter(jwtTokenProvider));
+    public FilterRegistrationBean<JwtExceptionFilter> jwtExceptionFilterFilterRegistrationBean() {
+        FilterRegistrationBean<JwtExceptionFilter> registrationBean = new FilterRegistrationBean<>();
+        registrationBean.setFilter(new JwtExceptionFilter());
         registrationBean.addUrlPatterns(
                 "/auth",
                 "/auth/userId"
@@ -33,6 +34,20 @@ public class WebConfig implements WebMvcConfigurer {
         registrationBean.setOrder(0);
         return registrationBean;
     }
+
+    @Bean
+    public FilterRegistrationBean<JwtAuthFilter> jwtAuthFilterFilterRegistrationBean() {
+        FilterRegistrationBean<JwtAuthFilter> registrationBean = new FilterRegistrationBean<>();
+        registrationBean.setFilter(new JwtAuthFilter(jwtTokenProvider));
+        registrationBean.addUrlPatterns(
+                "/auth",
+                "/auth/userId"
+        );
+        registrationBean.setOrder(1);
+        return registrationBean;
+    }
+
+
     @Bean
     public FilterRegistrationBean<AuthFilter> authFilter() {
         FilterRegistrationBean<AuthFilter> registrationBean = new FilterRegistrationBean<>();
@@ -43,7 +58,7 @@ public class WebConfig implements WebMvcConfigurer {
                 "/api/qna/addAnswer"
 //                "/auth/*"
                 );        // 필터를 적용할 URL 패턴
-        registrationBean.setOrder(1);                 // 필터 순서 (낮을수록 먼저 실행)
+        registrationBean.setOrder(2);                 // 필터 순서 (낮을수록 먼저 실행)
         return registrationBean;
     }
 
