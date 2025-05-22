@@ -20,12 +20,9 @@ public class JwtAuthFilter extends AuthFilter{
 
         // Bearer 뒤에 오는 토큰값
         String token = authHeader.substring(7);
-        try {
-            String userId = jwtTokenProvider.validateToken(token);
-            request.setAttribute("loginUserId", userId);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
+        String userId = jwtTokenProvider.validateToken(token);
+        request.setAttribute("loginUserId", userId);
+
+        return true;
     }
 }
