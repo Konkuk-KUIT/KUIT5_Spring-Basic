@@ -19,13 +19,13 @@ public abstract class JwtAuthFilter extends AuthFilter {
         if (token == null)
             return false;
 
-        String userId = jwtTokenProvider.validateToken(token);
-        if (userId == null)
+        String loginUserId = jwtTokenProvider.validateToken(token);
+        if (loginUserId == null)
             return false;
 
-        request.setAttribute("userId", userId);
+        request.setAttribute("userId", loginUserId);
 
-        return false;
+        return true;
     }
 
     private String resolveToken(HttpServletRequest request) {
