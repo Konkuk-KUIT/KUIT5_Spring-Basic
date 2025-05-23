@@ -27,5 +27,6 @@ public abstract class AuthFilter extends OncePerRequestFilter {
     }
 
     protected abstract boolean isAuthenticated(HttpServletRequest request);
+
 }
 

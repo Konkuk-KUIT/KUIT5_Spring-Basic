@@ -1,5 +1,6 @@
 package kuit.springbasic.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import kuit.springbasic.auth.JwtInfo;
 import kuit.springbasic.auth.JwtTokenProvider;
 import kuit.springbasic.domain.User;
@@ -32,7 +33,8 @@ public class AuthController {
     // 인터셉터를 통한 loginUserId
     // 응답 결과로 "ok, loginUserId = kuit" 이 나와야 함
     @GetMapping("/auth/userId")
-    public String authUserId(@RequestParam("loginUserId") String loginUserId) {
+    public String authUserId(HttpServletRequest request) {
+        String loginUserId = (String) request.getAttribute("loginUserId");
         return "ok, loginUserId = " + loginUserId;
     }
 }
