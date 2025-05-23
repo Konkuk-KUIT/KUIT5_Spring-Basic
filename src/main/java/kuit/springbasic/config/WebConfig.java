@@ -57,7 +57,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .addPathPatterns(
                         "/user/updateForm/**", "/user/update/**"
                 );
-        registry.addInterceptor(new JwtSameAuthInterceptor())
+        registry.addInterceptor(new JwtSameAuthInterceptor(jwtTokenProvider))
                 .addPathPatterns(
                         "/auth/userId"
                 );
