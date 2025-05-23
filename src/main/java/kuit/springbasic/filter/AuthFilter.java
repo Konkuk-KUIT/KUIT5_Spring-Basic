@@ -20,7 +20,7 @@ public abstract class AuthFilter extends OncePerRequestFilter {
         if (!isAuthenticated(request)) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.getWriter().write("Unauthorized");
-            response.sendRedirect("user/loginForm"); // 비인증 사용자면 login page 로 리다이렉트
+            response.sendRedirect("/user/loginForm"); // 비인증 사용자면 login page 로 리다이렉트
             return;
         }
 
