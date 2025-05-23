@@ -3,6 +3,7 @@ package kuit.springbasic.config;
 import kuit.springbasic.auth.JwtTokenProvider;
 import kuit.springbasic.filter.AuthFilter;
 import kuit.springbasic.filter.JwtAuthFilter;
+import kuit.springbasic.filter.JwtExceptionFilter;
 import kuit.springbasic.filter.SessionAuthFilter;
 import kuit.springbasic.interceptor.SameUserInterceptor;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -22,6 +23,15 @@ public class WebConfig implements WebMvcConfigurer {
     }
 
     @Bean
+    public FilterRegistrationBean<JwtExceptionFilter> jwtExceptionFilter() {
+        FilterRegistrationBean<JwtExceptionFilter> registrationBean = new FilterRegistrationBean<>();
+        registrationBean.setFilter(new JwtExceptionFilter()); // 사용할 필터 객체
+        registrationBean.addUrlPatterns("/api/*", "/auth/*");        // 필터를 적용할 URL 패턴
+        registrationBean.setOrder(0);                 // 필터 순서 (낮을수록 먼저 실행)
+        return registrationBean;
+    }
+
+    @Bean
     public FilterRegistrationBean<AuthFilter> jwtAuthFilter(JwtTokenProvider jwtTokenProvider) {
         FilterRegistrationBean<AuthFilter> registrationBean = new FilterRegistrationBean<>();
         registrationBean.setFilter(new JwtAuthFilter(jwtTokenProvider)); // 사용할 필터 객체
@@ -32,7 +42,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     // 만들어둔 필터 등록 -  서블릿 url 패턴
     @Bean
-    public FilterRegistrationBean<AuthFilter> authFilter() {
+    public FilterRegistrationBean<AuthFilter> sessionAuthFilter() {
         FilterRegistrationBean<AuthFilter> registrationBean = new FilterRegistrationBean<>();
         registrationBean.setFilter(new SessionAuthFilter()); // 사용할 필터 객체
         registrationBean.addUrlPatterns(

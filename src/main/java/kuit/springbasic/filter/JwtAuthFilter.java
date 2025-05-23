@@ -14,19 +14,13 @@ public class JwtAuthFilter extends AuthFilter {
 
     @Override
     protected boolean isAuthenticated(HttpServletRequest request) {
-        String userId;
         String token = resolveToken(request);
-
         if (token == null){
             return false;
         }
-        userId = jwtTokenProvider.validateToken(token);
 
-        if (userId == null){
-            return false;
-        }
+        String userId = jwtTokenProvider.validateToken(token);
         request.setAttribute("loginUserId", userId);
-
         return true;
     }
     private String resolveToken(HttpServletRequest request){
