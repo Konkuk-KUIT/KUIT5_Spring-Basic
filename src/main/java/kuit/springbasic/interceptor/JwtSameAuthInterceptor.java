@@ -24,4 +24,6 @@ public class JwtSameAuthInterceptor implements HandlerInterceptor {
         // 4. 모든 검증을 통과하면 요청을 계속 진행
         return loginUserId.equals(userId);
     }
+
+
 }
