@@ -10,7 +10,7 @@ secret:
   jwt:
     access:
       key: ${ACCESS_TOKEN_KEY}
-      expired-in: 3600000
+      expired-in: ${ACCESS_TOKEN_MILLISECONDS}
     refresh:
       key: ${REFRESH_TOKEN_KEY}
       expired-in: 1209600000
