@@ -5,6 +5,7 @@ import kuit.springbasic.filter.AuthFilter;
 import kuit.springbasic.filter.JwtAuthFilter;
 import kuit.springbasic.filter.JwtExceptionFilter;
 import kuit.springbasic.filter.SessionAuthFilter;
+import kuit.springbasic.interceptor.JwtSameAuthInterceptor;
 import kuit.springbasic.interceptor.SameUserInterceptor;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -63,5 +64,12 @@ public class WebConfig implements WebMvcConfigurer {
                         "/user/updateForm/**", "/user/update/**"
 //                        "/auth/userId"
                 );
+        registry.addInterceptor(new JwtSameAuthInterceptor())
+                .addPathPatterns(
+//                        "/user/updateForm/**", "/user/update/**",
+                        "/auth/userId"
+                );
     }
+
+
 }
