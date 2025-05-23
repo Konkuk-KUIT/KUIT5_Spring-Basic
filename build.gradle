@@ -30,6 +30,14 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
+	// spring security
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	testImplementation 'org.springframework.security:spring-security-test'
+
+	//jwt
+	implementation("io.jsonwebtoken:jjwt:0.12.6")
+
+
 	// JSP
 	implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
 	implementation 'jakarta.servlet:jakarta.servlet-api'
@@ -39,6 +47,7 @@ dependencies {
 	runtimeOnly 'com.h2database:h2'
 	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 	implementation('org.apache.commons:commons-dbcp2:2.9.0')
+
 }
 
 tasks.named('test') {
