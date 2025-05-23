@@ -18,7 +18,7 @@ public class UserService {
         User findUser = findById(userId);
 
         // 비밀번호 해시 값 비교
-        if (findUser != null && passwordEncoder.matches(password, findUser.getPassword())) {
+        if (findUser != null && password.equals(findUser.getPassword())) {
             return findUser;
         }
         return null;

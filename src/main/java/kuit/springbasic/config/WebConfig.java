@@ -1,6 +1,7 @@
 package kuit.springbasic.config;
 
 import kuit.springbasic.filter.AuthFilter;
+import kuit.springbasic.filter.JwtExceptionFilter;
 import kuit.springbasic.filter.SessionAuthFilter;
 import kuit.springbasic.interceptor.SameUserInterceptor;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -19,6 +20,15 @@ public class WebConfig implements WebMvcConfigurer {
     }
 
     @Bean
+    public FilterRegistrationBean<JwtExceptionFilter> jwtExceptionFilter() {
+        FilterRegistrationBean<JwtExceptionFilter> registrationBean = new FilterRegistrationBean<>();
+        registrationBean.setFilter(new JwtExceptionFilter());
+        registrationBean.addUrlPatterns("/*");
+        registrationBean.setOrder(1);
+        return registrationBean;
+    }
+
+    @Bean
     public FilterRegistrationBean<AuthFilter> authFilter() {
         FilterRegistrationBean<AuthFilter> registrationBean = new FilterRegistrationBean<>();
         registrationBean.setFilter(new SessionAuthFilter()); // 사용할 필터 객체
@@ -28,7 +38,7 @@ public class WebConfig implements WebMvcConfigurer {
                 "/api/qna/addAnswer",
                 "/auth/*"
                 );        // 필터를 적용할 URL 패턴
-        registrationBean.setOrder(1);                 // 필터 순서 (낮을수록 먼저 실행)
+        registrationBean.setOrder(2);                 // 필터 순서 (낮을수록 먼저 실행)
         return registrationBean;
     }
 
