@@ -1,15 +1,19 @@
 package kuit.springbasic.config;
 
-import kuit.springbasic.filter.AuthFilter;
-import kuit.springbasic.filter.SessionAuthFilter;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import kuit.springbasic.auth.JwtTokenProvider;
+import kuit.springbasic.filter.JwtAuthFilter;
+import kuit.springbasic.filter.JwtExceptionFilter;
+import kuit.springbasic.interceptor.JwtSameAuthInterceptor;
 import kuit.springbasic.interceptor.SameUserInterceptor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
+@RequiredArgsConstructor
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
@@ -17,11 +21,11 @@ public class WebConfig implements WebMvcConfigurer {
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
+    private final JwtTokenProvider jwtTokenProvider;
     @Bean
-    public FilterRegistrationBean<AuthFilter> authFilter() {
-        FilterRegistrationBean<AuthFilter> registrationBean = new FilterRegistrationBean<>();
-        registrationBean.setFilter(new SessionAuthFilter()); // 사용할 필터 객체
+    public FilterRegistrationBean<JwtAuthFilter> authFilter() {
+        FilterRegistrationBean<JwtAuthFilter> registrationBean = new FilterRegistrationBean<>();
+        registrationBean.setFilter(new JwtAuthFilter(jwtTokenProvider)); // 사용할 필터 객체
         registrationBean.addUrlPatterns(
                 "/user/list", "/user/updateForm/*", "/user/update/*",
                 "/qna/form", "/qna/updateForm/*", "/qna/update", "/qna/create",
@@ -32,12 +36,31 @@ public class WebConfig implements WebMvcConfigurer {
         return registrationBean;
     }
 
+    @Bean
+    public FilterRegistrationBean<JwtExceptionFilter> jwtExceptionFilter(ObjectMapper objectMapper) {
+        FilterRegistrationBean<JwtExceptionFilter> registrationBean = new FilterRegistrationBean<>();
+        registrationBean.setFilter(new JwtExceptionFilter(objectMapper));
+        registrationBean.addUrlPatterns(
+                "/user/list", "/user/updateForm/*", "/user/update/*",
+                "/qna/form", "/qna/updateForm/*", "/qna/update", "/qna/create",
+                "/api/qna/addAnswer",
+                "/auth/*"
+        );
+        registrationBean.setOrder(0);
+
+        return registrationBean;
+    }
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new SameUserInterceptor())
                 .addPathPatterns(
-                        "/user/updateForm/**", "/user/update/**",
+                        "/user/updateForm/**", "/user/update/**"
+                );
+        registry.addInterceptor(new JwtSameAuthInterceptor())
+                .addPathPatterns(
                         "/auth/userId"
                 );
     }
+
 }
