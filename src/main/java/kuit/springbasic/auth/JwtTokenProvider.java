@@ -10,6 +10,7 @@ import javax.crypto.SecretKey;
 import java.util.Base64;
 import java.util.Date;
 
+// JWT 발급, 검증
 @Component
 public class JwtTokenProvider {
 
@@ -61,6 +62,7 @@ public class JwtTokenProvider {
         return new JwtInfo(accessToken, refreshToken);
     }
 
+    // 토큰 검증, payload 추출
     public String validateToken(String token) {
         Claims payload = Jwts.parser()
                 .verifyWith(accessSecretKey).build()
