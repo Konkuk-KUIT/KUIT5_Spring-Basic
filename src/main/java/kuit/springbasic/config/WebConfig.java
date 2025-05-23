@@ -48,8 +48,8 @@ public class WebConfig implements WebMvcConfigurer {
         registrationBean.addUrlPatterns(
                 "/user/list", "/user/updateForm/*", "/user/update/*",
                 "/qna/form", "/qna/updateForm/*", "/qna/update", "/qna/create",
-                "/api/qna/addAnswer",
-                "/auth/*"
+                "/api/qna/addAnswer"
+//                "/auth/*"
                 );        // 필터를 적용할 URL 패턴
         registrationBean.setOrder(2);                 // 필터 순서 (낮을수록 먼저 실행)
         return registrationBean;
@@ -60,8 +60,8 @@ public class WebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new SameUserInterceptor())
                 .addPathPatterns(
-                        "/user/updateForm/**", "/user/update/**",
-                        "/auth/userId"
+                        "/user/updateForm/**", "/user/update/**"
+//                        "/auth/userId"
                 );
     }
 }
