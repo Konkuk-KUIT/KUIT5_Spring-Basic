@@ -3,6 +3,7 @@ package kuit.springbasic.config;
 import kuit.springbasic.auth.JwtTokenProvider;
 import kuit.springbasic.filter.AuthFilter;
 import kuit.springbasic.filter.JwtAuthFilter;
+import kuit.springbasic.filter.JwtExceptionFilter;
 import kuit.springbasic.filter.SessionAuthFilter;
 import kuit.springbasic.interceptor.SameUserInterceptor;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -42,6 +43,16 @@ public class WebConfig implements WebMvcConfigurer {
         registrationBean.setOrder(0);  // SessionAuthFilter보다 먼저 실행
         return registrationBean;
     }
+
+    @Bean
+    public FilterRegistrationBean<JwtExceptionFilter> jwtExceptionFilter() {
+        FilterRegistrationBean<JwtExceptionFilter> registrationBean = new FilterRegistrationBean<>();
+        registrationBean.setFilter(new JwtExceptionFilter());
+        registrationBean.addUrlPatterns("/auth/*");
+        registrationBean.setOrder(-1);  // 가장 먼저 실행되어야 함
+        return registrationBean;
+    }
+
 
 
     @Override
