@@ -6,6 +6,7 @@ import kuit.springbasic.filter.AuthFilter;
 import kuit.springbasic.filter.JwtAuthFilter;
 import kuit.springbasic.filter.JwtExceptionFilter;
 import kuit.springbasic.filter.SessionAuthFilter;
+import kuit.springbasic.interceptor.JwtSameAuthInterceptor;
 import kuit.springbasic.interceptor.SameUserInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -59,7 +60,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new SameUserInterceptor())
+        registry.addInterceptor(new JwtSameAuthInterceptor(jwtTokenProvider))
                 .addPathPatterns(
                         "/user/updateForm/**", "/user/update/**",
                         "/auth/userId"
