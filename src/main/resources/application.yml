@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: spring-basic
+  mvc:
+    view:
+      prefix: /WEB-INF/
+      suffix: .jsp
+
+secret:
+  jwt:
+    access:
+      key: ${ACCESS_TOKEN_KEY}
+      expired-in: 3600000
+    refresh:
+      key: ${REFRESH_TOKEN_KEY}
+      expired-in: 1209600000
+
+logging:
+  level:
+    root: info
+    kuit.springbasic: debug
