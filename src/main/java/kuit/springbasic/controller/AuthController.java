@@ -5,10 +5,9 @@ import kuit.springbasic.auth.JwtTokenProvider;
 import kuit.springbasic.domain.User;
 import kuit.springbasic.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestAttribute;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -36,5 +35,33 @@ public class AuthController {
     // @RequestParam -> @RequestAttribute 으로 변경
     public String authUserId(@RequestAttribute("loginUserId") String loginUserId) {
         return "ok, loginUserId = " + loginUserId;
+    }
+
+    @PostMapping("/auth/refresh")
+    public ResponseEntity<?> refreshToken(@RequestHeader("Authorization") String refreshHeader) {
+        if(refreshHeader == null || !refreshHeader.startsWith("Bearer ")) {
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body("The authorization header is missing or malformed.");
+        }
+
+        String refreshToken = refreshHeader.substring(7);
+
+        try {
+            String userId = jwtTokenProvider.validateRefreshToken(refreshToken);
+            User user = userService.findById(userId);
+            if(user == null) {
+                return ResponseEntity
+                        .status(HttpStatus.UNAUTHORIZED)
+                        .body("User not exist.");
+            }
+            // New Token
+            JwtInfo newToken = jwtTokenProvider.createToken(user.getEmail(), user.getUserId());
+            return ResponseEntity.ok(newToken);
+        } catch (Exception e) {
+            return ResponseEntity
+                    .status(HttpStatus.UNAUTHORIZED)
+                    .body("Invalid Refresh Token");
+        }
     }
 }
