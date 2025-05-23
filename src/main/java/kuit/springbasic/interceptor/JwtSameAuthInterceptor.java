@@ -2,20 +2,12 @@ package kuit.springbasic.interceptor;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import kuit.springbasic.domain.User;
-import kuit.springbasic.util.UserSessionUtils;
-import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-@Component
-public class SameUserInterceptor implements HandlerInterceptor {
-
-    // 인가에 대한 부분이어서 controller 진입 전에 preHandler 사용
+public class JwtSameAuthInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-
         // 1. URL 파라미터 정보 추출
         String userId = request.getParameter("userId");
 
@@ -25,11 +17,10 @@ public class SameUserInterceptor implements HandlerInterceptor {
             return false;
         }
 
-        // 3. 세션에서 현재 로그인된 사용자를 가져옴
-        HttpSession session = request.getSession();
-        User user = (User) session.getAttribute(UserSessionUtils.USER_SESSION_KEY);
+        // 3. attribute 에서 현재 로그인된 사용자를 가져옴
+        String loginUserId = (String) request.getAttribute("loginUserId");
 
         // 4. 모든 검증을 통과하면 요청을 계속 진행
-        return user.getUserId().equals(userId);
+        return loginUserId.equals(userId);
     }
 }

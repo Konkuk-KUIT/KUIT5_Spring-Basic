@@ -8,6 +8,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
+// OncePerRequestFilter: 메인 요청에만 필터가 걸림
 public abstract class AuthFilter extends OncePerRequestFilter {
 
     @Override
@@ -19,7 +20,7 @@ public abstract class AuthFilter extends OncePerRequestFilter {
         if (!isAuthenticated(request)) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.getWriter().write("Unauthorized");
-            response.sendRedirect("user/loginForm");
+            response.sendRedirect("/user/loginForm"); // 비인증 사용자면 login page 로 리다이렉트
             return;
         }
 
