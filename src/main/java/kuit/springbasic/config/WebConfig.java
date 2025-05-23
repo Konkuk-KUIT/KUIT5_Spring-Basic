@@ -1,8 +1,11 @@
 package kuit.springbasic.config;
 
+import kuit.springbasic.auth.JwtTokenProvider;
 import kuit.springbasic.filter.AuthFilter;
+import kuit.springbasic.filter.JwtAuthFilter;
 import kuit.springbasic.filter.SessionAuthFilter;
 import kuit.springbasic.interceptor.SameUserInterceptor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,8 +13,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+@RequiredArgsConstructor
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
+
+    private final JwtTokenProvider jwtTokenProvider;
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
@@ -21,7 +27,8 @@ public class WebConfig implements WebMvcConfigurer {
     @Bean
     public FilterRegistrationBean<AuthFilter> authFilter() {
         FilterRegistrationBean<AuthFilter> registrationBean = new FilterRegistrationBean<>();
-        registrationBean.setFilter(new SessionAuthFilter()); // 사용할 필터 객체
+        registrationBean.setFilter(new JwtAuthFilter(jwtTokenProvider)); // JwtAuthFilter 등록
+//        registrationBean.setFilter(new SessionAuthFilter()); // 사용할 필터 객체
         registrationBean.addUrlPatterns(
                 "/user/list", "/user/updateForm/*", "/user/update/*",
                 "/qna/form", "/qna/updateForm/*", "/qna/update", "/qna/create",
