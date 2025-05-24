@@ -1,5 +1,7 @@
 package kuit.springbasic.domain;
 
+import java.util.Objects;
+
 public class User {
     private String userId;
     private String password;
@@ -60,22 +62,6 @@ public class User {
         this.email = updateUser.email;
     }
 
-    public boolean matchPassword(String password) {
-        if (password == null) {
-            return false;
-        }
-
-        return this.password.equals(password);
-    }
-
-    public boolean isSameUser(User user) {
-        return isSameUser(user.getUserId(),user.getPassword());
-    }
-
-    public boolean isSameUser(String userId, String password) {
-        return userId.equals(this.userId) && matchPassword(password);
-    }
-
     @Override
     public String toString() {
         return "User{" +
@@ -84,5 +70,18 @@ public class User {
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(userId, user.userId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(userId);
     }
 }
