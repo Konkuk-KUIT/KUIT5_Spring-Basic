@@ -2,6 +2,7 @@ package kuit.springbasic.config;
 
 import kuit.springbasic.filter.AuthFilter;
 import kuit.springbasic.filter.SessionAuthFilter;
+import kuit.springbasic.interceptor.JwtSameAuthInterceptor;
 import kuit.springbasic.interceptor.SameUserInterceptor;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -27,14 +28,14 @@ public class WebConfig implements WebMvcConfigurer {
                 "/qna/form", "/qna/updateForm/*", "/qna/update", "/qna/create",
                 "/api/qna/addAnswer",
                 "/auth/*"
-                );        // 필터를 적용할 URL 패턴
+        );        // 필터를 적용할 URL 패턴
         registrationBean.setOrder(1);                 // 필터 순서 (낮을수록 먼저 실행)
         return registrationBean;
     }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new SameUserInterceptor())
+        registry.addInterceptor(new JwtSameAuthInterceptor())
                 .addPathPatterns(
                         "/user/updateForm/**", "/user/update/**",
                         "/auth/userId"
