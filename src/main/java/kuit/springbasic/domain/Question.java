@@ -94,20 +94,19 @@ public class Question {
     public void decreaseCountOfAnswer() {
         countOfAnswer -= 1;
     }
+
     public boolean isSameUser(User user) {
         return writer.equals(user.getUserId());
     }
 
-    public void updateCountofAnswer(Question question){
+    public void updateCountofAnswer(Question question) {
         this.countOfAnswer = question.countOfAnswer;
     }
+
     public void update(Question question) {
         this.questionId = question.questionId;
-        this.writer = question.writer;
         this.title = question.title;
         this.contents = question.contents;
-        this.createdDate = question.createdDate;
-        this.countOfAnswer = question.countOfAnswer;
     }
 
     @Override
