@@ -10,10 +10,10 @@ secret:
   jwt:
     access:
       key: ${ACCESS_TOKEN_KEY}
-      expired-in: 3600000
+      expired-in: 10000000
     refresh:
       key: ${REFRESH_TOKEN_KEY}
-      expired-in: 1209600000
+      expired-in: 10000000
 
 logging:
   level:
